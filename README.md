@@ -1,13 +1,13 @@
 # C++ Result
 
-A rust like Result type for modern C++.
+A Rust inspired `result<V,E>` type for modern C++.
 
 ```cpp
 template<typename V, typename E>
 struct result;
 ```
 
-basically a wrapper for:
+basically a sophisticated wrapper for:
 
 ```cpp
 std::variant< ok<V>, error<E> >
