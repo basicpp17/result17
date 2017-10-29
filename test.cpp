@@ -26,6 +26,23 @@ using namespace std::literals;
 #include <iostream>
 #include <string>
 
+/*
+ * example from readme * /
+int main() {
+    auto f = openFile("hello.txt")
+                 .orMap([](auto &&) { return openFile(__FILE__); })           // invoked only on error
+                 .andMap([](auto &&in) -> Result<std::stringstream, string> { // invoked only if successful
+                     std::stringstream out;
+                     out << in.rdbuf();
+                     if (out.str().empty()) return error("empty file"s);
+                     return ok(move(out));
+                 })
+                 .andMap(&splitLines) // adds no errors
+                 .orMap([](auto) -> Result<std::vector<string>, string> { return ok(std::vector<string>{}); });
+    for (auto &l : f.unwrap()) std::cout << l << '\n'; // we are sure we have a value
+}
+/ **/
+
 int main() {
     auto f = openFile("hello.txt") //
                  .orMap([](auto &&) { return openFile(__FILE__); })
@@ -43,6 +60,6 @@ int main() {
         in.erase(mid, in.end());
     });
 
-    auto o = c.orMap([](auto) { return std::vector<string>{}; });
+    auto o = c.orMap([](auto) -> Result<std::vector<string>, string> { return ok(std::vector<string>{}); });
     for (auto &l : o.unwrap()) std::cout << l << '\n';
 }
