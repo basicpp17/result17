@@ -32,7 +32,7 @@ int main() {
         .orMap([](auto) -> Result<std::vector<string>, string> { 
             return ok(std::vector<string>{}); 
         });
-    for (auto &l : o.unwrap()) std::cout << l << '\n'; // we are sure we have a value
+    for (auto &l : f.unwrap()) std::cout << l << '\n'; // we are sure we have a value
 }
 ```
 
