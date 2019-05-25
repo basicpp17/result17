@@ -1,0 +1,25 @@
+language: cpp
+
+matrix:
+  include:
+    - os: linux
+      services:
+        - docker
+      before_script:
+        - thirdparty/git_clone_googletest.sh
+      script:
+        - docker run -v${PWD}:/build
+            arbmind/qbs-clang7:1 
+            build --file /build/BasiC++17.qbs --build-directory /tmp/build 
+            -p autotest-runner
+
+    - os: windows
+      install:
+        - choco install qbs
+        - qbs setup-toolchains --detect
+      before_script:
+        - thirdparty/git_clone_googletest.sh
+      script:
+        - qbs
+            build profile:MSVC2017-x64 --file BasiC++17.qbs --build-directory ${TMP}/build
+            -p autotest-runner

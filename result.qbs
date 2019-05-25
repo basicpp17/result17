@@ -1,23 +1,55 @@
 import qbs
 
-Application {
-    consoleApplication: true
+Project {
+    name: "Result17"
 
-    Depends { name: "cpp" }
-    cpp.cxxLanguageVersion: "c++17"
-
-    files: [
-        "invocable.h",
-        "overloaded.h",
-        "result.h",
-        "return_type.h",
-        "test.cpp",
+    references: [
+        "thirdparty",
+        "src/result17.lib",
     ]
 
-    cpp.cxxStandardLibrary: {
-        if (qbs.toolchain.contains('clang')) return "libc++";
+    AutotestRunner {}
+
+    // note: if do not use this .qbs project you need a similar setup
+    Product {
+        name: "cpp17"
+
+        Export {
+            Depends { name: "cpp" }
+            cpp.cxxLanguageVersion: "c++17"
+            cpp.treatWarningsAsErrors: true
+
+            Properties {
+                condition: qbs.toolchain.contains('msvc')
+                cpp.cxxFlags: base.concat(
+                    "/permissive-", "/Zc:__cplusplus", // best C++ compatibility
+                    "/diagnostics:caret", // better errors
+                    "/wd4068", // ignore unknown pragmas
+                    "/D_ENABLE_EXTENDED_ALIGNED_STORAGE" // use real alignments
+                )
+            }
+            Properties {
+                condition: qbs.toolchain.contains('clang')
+                cpp.cxxFlags: base.concat(
+                    "--pedantic", // best C++ compatibility
+                    "-Wall", "-Wextra" // enable more warnings
+                )
+                cpp.cxxStandardLibrary: "libc++"
+                cpp.staticLibraries: ["c++", "c++abi"]
+            }
+        }
     }
-    cpp.staticLibraries: {
-        if (qbs.toolchain.contains('clang')) return ["c++", "c++abi"];
+
+    Product {
+        name: "[Extra Files]"
+        files: [
+            ".clang-format",
+            ".clang-tidy",
+            ".editorconfig",
+            ".gitignore",
+            ".travis.yml",
+            "LICENSE",
+            "Readme.md",
+        ]
     }
 }

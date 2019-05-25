@@ -1,2 +1,11 @@
+!*.lib/
+!*.app/
+!*.data/
+!*.view/
 *.user
+*.user.*
+*.pyc
+thirdparty/*/
+.vagrant/
 .vscode/
+.vs/
