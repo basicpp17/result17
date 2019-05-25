@@ -49,7 +49,7 @@ Project {
             ".gitignore",
             ".travis.yml",
             "LICENSE",
-            "Readme.md",
+            "README.md",
         ]
     }
 }
