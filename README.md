@@ -1,5 +1,7 @@
 # C++ Result
 
+[![Build Status](https://travis-ci.org/basicpp17/result17.svg?branch=develop)](https://travis-ci.org/basicpp17/result17)
+
 A Rust inspired `result<V,E>` type for C++17.
 
 ```cpp
