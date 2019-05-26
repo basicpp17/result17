@@ -2,11 +2,11 @@
 
 [![Build Status](https://travis-ci.org/basicpp17/result17.svg?branch=develop)](https://travis-ci.org/basicpp17/result17)
 
-A Rust inspired `result<V,E>` type for C++17.
+A Rust inspired `Result<V,E>` type for C++17.
 
 ```cpp
 template<typename V, typename E>
-struct result;
+struct Result;
 ```
 
 basically a sophisticated wrapper for:
