@@ -1,4 +1,4 @@
-# C++ Result
+# C++17 Result
 
 [![Build Status](https://travis-ci.org/basicpp17/result17.svg?branch=develop)](https://travis-ci.org/basicpp17/result17)
 
